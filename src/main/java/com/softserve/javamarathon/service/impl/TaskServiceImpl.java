@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task addTaskToSprint(Task task, Sprint sprint) {
         return sprintRepository.findById(sprint.getId()).map(obj -> {
-            task.setSprint(obj);
+            task.setSprint(sprint);
             return taskRepository.save(task);
         }).orElseThrow(() -> new NoEntityException("sprint " + sprint.getId() + " not found"));
     }

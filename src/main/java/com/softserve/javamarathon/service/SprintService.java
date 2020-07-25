@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface SprintService {
     List<Sprint> getSprintsByMarathonId(Long marathonId);
+
     boolean addSprintToMarathon(Sprint sprint, Marathon marathon);
+
     boolean updateSprint(Sprint sprint);
+
     Sprint getSprintById(Long id);
 }

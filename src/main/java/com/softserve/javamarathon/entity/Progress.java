@@ -17,8 +17,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@EqualsAndHashCode(exclude = {"sprints", "users"})
-//@ToString(exclude = {"sprints", "users"})
 @Table(name = "progresses")
 public class Progress {
     @Id

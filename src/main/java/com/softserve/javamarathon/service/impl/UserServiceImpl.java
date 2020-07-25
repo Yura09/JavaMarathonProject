@@ -1,7 +1,6 @@
 package com.softserve.javamarathon.service.impl;
 
 import com.softserve.javamarathon.entity.Marathon;
-import com.softserve.javamarathon.entity.Progress;
 import com.softserve.javamarathon.entity.Task;
 import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -89,10 +87,10 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public boolean addUserToMarathon(User user, Marathon marathon) {
-        return marathonRepository.findById(marathon.getId()).map(obj -> {
-            user.getMarathons().add(obj);
-            return userRepository.save(user) != null;
-        }).orElse(false);
+        User userEntity = userRepository.getOne(user.getId());
+        Marathon marathonEntity = marathonRepository.getOne(marathon.getId());
+        marathonEntity.getUsers().add(userEntity);
+        return marathonRepository.save(marathonEntity) != null;
     }
 
     //???
@@ -101,9 +99,8 @@ public class UserServiceImpl implements UserService {
     public boolean addUserToTask(User user, Task task) {
         User userEntity = userRepository.getOne(user.getId());
         Task taskEntity = taskRepository.getOne(task.getId());
-        Progress progress = userEntity.getProgresses().stream().filter(x -> x.getTrainee().equals(userEntity)).findFirst().get();
-        progress.setTask(taskEntity);
-       return progressRepository.save(progress)!=null;
+        return false;
+        // taskEntity.getProgresses().stream()
        /* return taskRepository.findById(task.getId()).map(obj -> {
             user.getProgresses().stream().filter(progress -> progress.getTask().equals(task)).findFirst().get().setTask(obj);
             return userRepository.save(user)!=null;

@@ -39,7 +39,7 @@ public class SprintServiceImpl implements SprintService {
     public boolean addSprintToMarathon(Sprint sprint, Marathon marathon) {
         return marathonRepository.findById(marathon.getId()).map(obj ->
         {
-            sprint.setMarathon(obj);
+            sprint.setMarathon(marathon);
             sprintRepository.save(sprint);
             return true;
         }).orElse(false);

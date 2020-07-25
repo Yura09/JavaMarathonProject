@@ -1,9 +1,6 @@
 package com.softserve.javamarathon.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,6 +11,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = {"tasks"})
+@ToString(exclude = {"tasks"})
 @Builder
 @Table(name = "sprints")
 public class Sprint {
