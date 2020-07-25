@@ -67,7 +67,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public List<Progress> allProgressByUserIdAndMarathonId(Long userId, Long marathonId) {
-    List<Progress>progresses=progressRepository.findAllByUserIdAndMarathonId(userId, marathonId);
+    List<Progress>progresses=progressRepository.findAllByTraineeIdAndMarathonId(userId, marathonId);
         if (progresses.isEmpty()) {
             throw new NoEntityException("nothing to show");
         }
@@ -77,7 +77,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public List<Progress> allProgressByUserIdAndSprintId(Long userId, Long sprintId) {
-        List<Progress>progresses=progressRepository.findAllByUserIdAndSprintId(userId, sprintId);
+        List<Progress>progresses=progressRepository.findAllByTraineeIdAndSprintId(userId, sprintId);
         if (progresses.isEmpty()) {
             throw new NoEntityException("nothing to show");
         }

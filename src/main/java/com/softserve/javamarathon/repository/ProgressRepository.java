@@ -12,13 +12,14 @@ import java.util.List;
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
 
     @Query(value = "select p from Progress p" +
+            " join fetch p.trainee tr"+
             " join fetch p.task t" +
             " join fetch t.sprint s" +
-            " join fetch s.marathon m where m.id=:marathonId and p.trainee.id=:userId")
-    List<Progress> findAllByUserIdAndMarathonId(@Param("userId") Long userId, @Param("marathonId") Long marathonId);
+            " join fetch s.marathon m where m.id= :marathonId and tr.id= :traineeId",nativeQuery = true)
+    List<Progress> findAllByTraineeIdAndMarathonId(@Param("traineeId") Long userId, @Param("marathonId") Long marathonId);
 
     @Query(value = "select p from Progress p" +
             " join fetch p.task t" +
-            " join fetch t.sprint s where s.id=:sprintId and p.trainee.id=userId")
-    List<Progress> findAllByUserIdAndSprintId(@Param("userId") Long userId, @Param("sprintId") Long SprintId);
+            " join fetch t.sprint s where s.id= :sprintId and p.trainee.id= :traineeId",nativeQuery = true)
+    List<Progress> findAllByTraineeIdAndSprintId(@Param("traineeId") Long userId, @Param("sprintId") Long SprintId);
 }
