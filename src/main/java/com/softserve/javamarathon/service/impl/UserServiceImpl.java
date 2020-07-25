@@ -1,6 +1,7 @@
 package com.softserve.javamarathon.service.impl;
 
 import com.softserve.javamarathon.entity.Marathon;
+import com.softserve.javamarathon.entity.Progress;
 import com.softserve.javamarathon.entity.Task;
 import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
@@ -99,7 +100,13 @@ public class UserServiceImpl implements UserService {
     public boolean addUserToTask(User user, Task task) {
         User userEntity = userRepository.getOne(user.getId());
         Task taskEntity = taskRepository.getOne(task.getId());
-        return false;
+        Progress newProgress = taskEntity.getProgresses().stream().filter(progress -> progress.getTask().equals(taskEntity)).findFirst().get();
+       /* Progress p = new Progress();
+        p.setTrainee(userEntity);
+        p.setTask(taskEntity);*/
+        newProgress.setTrainee(userEntity);
+        return progressRepository.save(newProgress) != null;
+
         // taskEntity.getProgresses().stream()
        /* return taskRepository.findById(task.getId()).map(obj -> {
             user.getProgresses().stream().filter(progress -> progress.getTask().equals(task)).findFirst().get().setTask(obj);

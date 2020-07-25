@@ -6,18 +6,21 @@ import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.TaskStatus;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.repository.ProgressRepository;
+import com.softserve.javamarathon.repository.TaskRepository;
+import com.softserve.javamarathon.repository.UserRepository;
 import com.softserve.javamarathon.service.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class ProgressServiceImpl implements ProgressService {
     private ProgressRepository progressRepository;
+    private TaskRepository taskRepository;
+    private UserRepository userRepository;
 
     @Autowired
     public void setProgressRepository(ProgressRepository progressRepository) {
@@ -33,7 +36,13 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public Progress addTaskForStudent(Task task, User student) {
-        return null;
+        Task taskEntity = taskRepository.getOne(task.getId());
+        User userEntity = userRepository.getOne(student.getId());
+//        userEntity.getProgresses().add(Progress.builder().trainee(userEntity).task(taskEntity).build());
+        Progress progress = new Progress();
+        progress.setTrainee(userEntity);
+        progress.setTask(taskEntity);
+        return progressRepository.save(progress);
     }
 
     @Override
@@ -67,7 +76,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public List<Progress> allProgressByUserIdAndMarathonId(Long userId, Long marathonId) {
-    List<Progress>progresses=progressRepository.findAllByTraineeIdAndMarathonId(userId, marathonId);
+        List<Progress> progresses = progressRepository.findAllByTraineeIdAndMarathonId(userId, marathonId);
         if (progresses.isEmpty()) {
             throw new NoEntityException("nothing to show");
         }
@@ -77,7 +86,7 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public List<Progress> allProgressByUserIdAndSprintId(Long userId, Long sprintId) {
-        List<Progress>progresses=progressRepository.findAllByTraineeIdAndSprintId(userId, sprintId);
+        List<Progress> progresses = progressRepository.findAllByTraineeIdAndSprintId(userId, sprintId);
         if (progresses.isEmpty()) {
             throw new NoEntityException("nothing to show");
         }
