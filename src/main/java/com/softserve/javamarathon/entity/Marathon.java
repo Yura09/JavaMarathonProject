@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,7 @@ public class Marathon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
+    @Size(min = 3, max = 30, message = "title must be from 3 to 30  letters")
     private String title;
     @OneToMany(mappedBy = "marathon")
     private List<Sprint> sprints;

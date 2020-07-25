@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Sprint {
     @Column(name = "start_date")
     private LocalDate startDate;
     @NotNull
+    @Size(min = 3, max = 30, message = "title must be from 3 to 30 letters")
     private String title;
     @ManyToOne
     @NotNull
