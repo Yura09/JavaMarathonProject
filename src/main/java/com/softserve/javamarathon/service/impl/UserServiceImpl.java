@@ -5,6 +5,7 @@ import com.softserve.javamarathon.entity.Progress;
 import com.softserve.javamarathon.entity.Task;
 import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
+import com.softserve.javamarathon.entity.enums.TaskStatus;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.repository.MarathonRepository;
 import com.softserve.javamarathon.repository.ProgressRepository;
@@ -26,18 +27,11 @@ public class UserServiceImpl implements UserService {
     private ProgressRepository progressRepository;
 
     @Autowired
-    public void setUserRepository(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, MarathonRepository marathonRepository, TaskRepository taskRepository, ProgressRepository progressRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Autowired
-    public void setMarathonRepository(MarathonRepository marathonRepository) {
         this.marathonRepository = marathonRepository;
-    }
-
-    @Autowired
-    public void setTaskRepository(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
+        this.progressRepository = progressRepository;
     }
 
     @Override
@@ -100,12 +94,18 @@ public class UserServiceImpl implements UserService {
     public boolean addUserToTask(User user, Task task) {
         User userEntity = userRepository.getOne(user.getId());
         Task taskEntity = taskRepository.getOne(task.getId());
-        Progress newProgress = taskEntity.getProgresses().stream().filter(progress -> progress.getTask().equals(taskEntity)).findFirst().get();
+
+        Progress newProgress = Progress.builder().updated(taskEntity.getUpdated()).task(taskEntity).started(taskEntity.getCreated()).trainee(userEntity).status(TaskStatus.PENDING).build();
+        taskEntity.getProgresses().add(newProgress);
+        progressRepository.save(newProgress);
+
+        // taskRepository.save(task);
+        //   Progress newProgress = taskEntity.getProgresses().stream().filter(progress -> progress.getTask().equals(taskEntity)).findFirst().get();
        /* Progress p = new Progress();
         p.setTrainee(userEntity);
         p.setTask(taskEntity);*/
-        newProgress.setTrainee(userEntity);
-        return progressRepository.save(newProgress) != null;
+//        newProgress.setTrainee(userEntity);
+        return taskRepository.save(taskEntity) != null;
 
         // taskEntity.getProgresses().stream()
        /* return taskRepository.findById(task.getId()).map(obj -> {

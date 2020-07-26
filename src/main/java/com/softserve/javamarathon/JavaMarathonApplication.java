@@ -37,7 +37,7 @@ public class JavaMarathonApplication implements CommandLineRunner {
         progress.setStarted(LocalDate.of(2020, 6, 4));
         progress.setUpdated(LocalDate.of(2020, 6, 5));
         progress.setStatus(TaskStatus.PENDING);
-
+        userService.addUserToTask(userService.getUserById(2L),taskService.getTaskById(1L));
         //   progressService.addTaskForStudent(taskService.getTaskById(1L),userService.getUserById(2L));
         System.out.println(progressService.allProgressByUserIdAndMarathonId(1L, 1L));
         //progressService.addTaskForStudent(taskService.getTaskById(1L), userService.getUserById(2L));
