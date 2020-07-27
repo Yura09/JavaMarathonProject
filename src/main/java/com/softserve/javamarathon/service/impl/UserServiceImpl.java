@@ -1,11 +1,8 @@
 package com.softserve.javamarathon.service.impl;
 
 import com.softserve.javamarathon.entity.Marathon;
-import com.softserve.javamarathon.entity.Progress;
-import com.softserve.javamarathon.entity.Task;
 import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
-import com.softserve.javamarathon.entity.enums.TaskStatus;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.repository.MarathonRepository;
 import com.softserve.javamarathon.repository.ProgressRepository;
@@ -88,30 +85,6 @@ public class UserServiceImpl implements UserService {
         return marathonRepository.save(marathonEntity) != null;
     }
 
-    //???
-    @Override
-    @Transactional
-    public boolean addUserToTask(User user, Task task) {
-        User userEntity = userRepository.getOne(user.getId());
-        Task taskEntity = taskRepository.getOne(task.getId());
 
-        Progress newProgress = Progress.builder().updated(taskEntity.getUpdated()).task(taskEntity).started(taskEntity.getCreated()).trainee(userEntity).status(TaskStatus.PENDING).build();
-        taskEntity.getProgresses().add(newProgress);
-        progressRepository.save(newProgress);
-
-        // taskRepository.save(task);
-        //   Progress newProgress = taskEntity.getProgresses().stream().filter(progress -> progress.getTask().equals(taskEntity)).findFirst().get();
-       /* Progress p = new Progress();
-        p.setTrainee(userEntity);
-        p.setTask(taskEntity);*/
-//        newProgress.setTrainee(userEntity);
-        return taskRepository.save(taskEntity) != null;
-
-        // taskEntity.getProgresses().stream()
-       /* return taskRepository.findById(task.getId()).map(obj -> {
-            user.getProgresses().stream().filter(progress -> progress.getTask().equals(task)).findFirst().get().setTask(obj);
-            return userRepository.save(user)!=null;
-
-        }).orElse(false);*/
-    }
 }
+

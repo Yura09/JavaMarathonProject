@@ -22,13 +22,13 @@ public class Progress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
+
     @CreationTimestamp
     private LocalDate started;
-    @NotNull
+
     @Enumerated(EnumType.STRING)
-    private TaskStatus status;
-    @NotNull
+    private TaskStatus status=TaskStatus.NEW;
+
     @UpdateTimestamp
     private LocalDate updated;
     @ManyToOne

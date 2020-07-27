@@ -39,8 +39,4 @@ class JavaMarathonApplicationTests {
         assertThrows(NoEntityException.class,()->
                 marathonService.getMarathonById(10L));
     }
-   /* @Test
-	void contextLoads() {
-	}*/
-
 }

@@ -16,6 +16,5 @@ public interface UserService {
     List<User> getAllByRole(String role);
 
     boolean addUserToMarathon(User user, Marathon marathon);
-    //???
-    boolean addUserToTask(User user, Task task);
+
 }

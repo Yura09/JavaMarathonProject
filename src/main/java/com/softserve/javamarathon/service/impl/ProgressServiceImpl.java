@@ -21,6 +21,7 @@ public class ProgressServiceImpl implements ProgressService {
     private ProgressRepository progressRepository;
     private TaskRepository taskRepository;
     private UserRepository userRepository;
+
     @Autowired
     public ProgressServiceImpl(ProgressRepository progressRepository, TaskRepository taskRepository, UserRepository userRepository) {
         this.progressRepository = progressRepository;
@@ -33,20 +34,16 @@ public class ProgressServiceImpl implements ProgressService {
     public Progress getProgressById(Long id) {
         return progressRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
     }
+
     //???
     @Override
     @Transactional
     public Progress addTaskForStudent(Task task, User student) {
         Task taskEntity = taskRepository.getOne(task.getId());
         User userEntity = userRepository.getOne(student.getId());
-        //userEntity.getProgresses().add(Progress.builder().trainee(userEntity).task(taskEntity).build());
         Progress progress = new Progress();
         progress.setTrainee(userEntity);
         progress.setTask(taskEntity);
-        progress.setStatus(TaskStatus.PENDING);
-        progress.setUpdated(taskEntity.getUpdated());
-        progress.setStarted(taskEntity.getCreated());
-
         return progressRepository.save(progress);
     }
 
@@ -72,9 +69,15 @@ public class ProgressServiceImpl implements ProgressService {
     @Override
     @Transactional
     public boolean setStatus(TaskStatus status, Progress progress) {
-        Progress entity = getProgressById(progress.getId());
-        entity.setStatus(status);
-        return progressRepository.save(entity) != null;
+        Optional<Progress> progressEntityOpt = progressRepository.findById(progress.getId());
+        if (progressEntityOpt.isPresent()) {
+            Progress progressEntity = progressEntityOpt.get();
+            if (progressEntity.getStatus() != status) {
+                progressEntity.setStatus(status);
+                return true;
+            }
+        }
+        return false;
 
     }
 
