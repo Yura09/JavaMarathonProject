@@ -1,7 +1,6 @@
 package com.softserve.javamarathon.service;
 
 import com.softserve.javamarathon.entity.Marathon;
-import com.softserve.javamarathon.entity.Task;
 import com.softserve.javamarathon.entity.User;
 
 import java.util.List;

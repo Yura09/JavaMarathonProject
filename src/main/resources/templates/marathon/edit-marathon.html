@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<form action="#"
+      th:action="@{/marathons/edit/{id}(id=${marathon.id})}"
+      th:object="${marathon}"
+      method="post">
+    <label for="id">id</label>
+    <input type="text" disabled th:field="*{id}" id="id" placeholder="id">
+    <span th:if="${#fields.hasErrors('id')}" th:errors="*{id}"></span>
+    <label for="title">title</label>
+    <input type="text" th:field="*{title}" id="title" placeholder="title">
+    <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></span>
+
+    <input type="submit" value="Update">
+</form>
+</html>

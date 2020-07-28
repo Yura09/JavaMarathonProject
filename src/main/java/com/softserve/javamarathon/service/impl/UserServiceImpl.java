@@ -5,14 +5,13 @@ import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.repository.MarathonRepository;
-import com.softserve.javamarathon.repository.ProgressRepository;
-import com.softserve.javamarathon.repository.TaskRepository;
 import com.softserve.javamarathon.repository.UserRepository;
 import com.softserve.javamarathon.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,25 +19,20 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private MarathonRepository marathonRepository;
-    private TaskRepository taskRepository;
-    private ProgressRepository progressRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, MarathonRepository marathonRepository, TaskRepository taskRepository, ProgressRepository progressRepository) {
+    public UserServiceImpl(UserRepository userRepository, MarathonRepository marathonRepository) {
         this.userRepository = userRepository;
         this.marathonRepository = marathonRepository;
-        this.taskRepository = taskRepository;
-        this.progressRepository = progressRepository;
+
     }
 
     @Override
     @Transactional
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
-        if (users.isEmpty()) {
-            throw new NoEntityException("nothing to show");
-        }
-        return users;
+
+        return users.isEmpty() ? new ArrayList<>() : users;
     }
 
     @Override
@@ -70,10 +64,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllByRole(String role) {
 
         List<User> users = userRepository.findAllByRole(ROLE.valueOf(role));
-        if (users.isEmpty()) {
-            throw new NoEntityException("nothing to show");
-        }
-        return users;
+        return users.isEmpty() ? new ArrayList<>() : users;
     }
 
     @Override

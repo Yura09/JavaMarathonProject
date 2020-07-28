@@ -35,7 +35,6 @@ public class ProgressServiceImpl implements ProgressService {
         return progressRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
     }
 
-    //???
     @Override
     @Transactional
     public Progress addTaskForStudent(Task task, User student) {

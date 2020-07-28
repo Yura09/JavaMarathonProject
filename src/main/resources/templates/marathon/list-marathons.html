@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Marathon list</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h1>Marathon List</h1>
+
+<br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>edit</th>
+            <th>delete</th>
+        </tr>
+        <tr th:each="marathon : ${marathons}">
+            <td th:text="${marathon.id}"></td>
+            <td>
+                <a th:href="@{/students/{id}(id=${marathon.id})}" th:text="${marathon.title}"></a>
+            </td>
+            <td>
+                <form th:action="@{/marathons/edit/{id}(id=${marathon.id})}" method="get">
+                    <div><input type="submit" value="edit"/></div>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/marathons/delete/{id}(id=${marathon.id})}" method="get">
+                    <div>
+                        <input type="submit" value="delete"/>
+                    </div>
+                    <!--   <td> <form action="#" th:action="@{/marathons/delete/{id}(id=${marathon.id})}" method="post">
+                           &lt;!&ndash; <input type="hidden" value="${marathon.id}"/>&ndash;&gt;
+                            <input type="submit" value="delete"/>-->
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<p><a href="/marathons/create">Add Marathon</a></p>
+</body>
+</html>
