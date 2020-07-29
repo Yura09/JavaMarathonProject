@@ -38,7 +38,7 @@ public class MarathonController {
             return "marathon/edit-marathon";
         } catch (NoEntityException e) {
             model.addAttribute("error", e.getMessage());
-            return "marathon/error";
+            return "error";
         }
     }
 
@@ -73,7 +73,7 @@ public class MarathonController {
             return "redirect:/marathons";
         } catch (NoEntityException e) {
             model.addAttribute("error", e.getMessage());
-            return "marathon/error";
+            return "error";
         }
     }
 }

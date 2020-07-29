@@ -13,40 +13,42 @@
     <table border="1">
         <tr>
             <th>id</th>
-            <th>email</th>
             <th>first name</th>
             <th>last name</th>
-            <th>password</th>
             <th>role</th>
             <th>edit</th>
             <th>delete</th>
         </tr>
         <tr th:each="student : ${students}">
             <td th:text="${student.id}"></td>
-            <td th:text="${student.email}"></td>
             <td th:text="${student.firstName}"></td>
             <td th:text="${student.lastName}"></td>
-            <td th:text="${student.password}"></td>
             <td th:text="${student.role}"></td>
 
             <td>
-                <form th:action="@{/students/edit/{id}(id=${student.id})}" method="get">
+                <form th:action="@{'/students/'+${marathonId}+'/edit/'+${student.id}}" method="get">
                     <div><input type="submit" value="edit"/></div>
                 </form>
             </td>
             <td>
-                <form th:action="@{/students/delete/{id}(id=${student.id})}" method="get">
+                <form th:action="@{'/students/'+${marathonId}+'/delete/'+${student.id}}" method="get">
                     <div>
                         <input type="submit" value="delete"/>
                     </div>
-                    <!--   <td> <form action="#" th:action="@{/marathons/delete/{id}(id=${marathon.id})}" method="post">
-                           &lt;!&ndash; <input type="hidden" value="${marathon.id}"/>&ndash;&gt;
-                            <input type="submit" value="delete"/>-->
+
                 </form>
             </td>
         </tr>
     </table>
 </div>
-<p><a href="/students/create">Add Student</a></p>
+<br/>
+
+<div th:if="${marathonId!=null}">
+    <p><a th:href="@{'/students/'+${marathonId}+'/add'}">Add to current marathon</a></p>
+</div>
+
+<div th:if="${marathonId==null}">
+    <p><a th:href="@{'/students/create'}">register student</a></p>
+</div>
 </body>
 </html>
