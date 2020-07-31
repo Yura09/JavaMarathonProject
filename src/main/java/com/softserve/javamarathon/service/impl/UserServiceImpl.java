@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getByEmail(String email) {
+    public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 }

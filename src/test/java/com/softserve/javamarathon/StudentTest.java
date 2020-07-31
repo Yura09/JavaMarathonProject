@@ -1,6 +1,7 @@
-package com.softserve.javamarathon.service;
+package com.softserve.javamarathon;
 
 import com.softserve.javamarathon.entity.User;
+import com.softserve.javamarathon.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
