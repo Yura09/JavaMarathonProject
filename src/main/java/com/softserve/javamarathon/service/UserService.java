@@ -18,6 +18,6 @@ public interface UserService {
 
     void deleteUserById(Long id);
 
-    User getByEmail(String email);
+    User getUserByEmail(String email);
 
 }
