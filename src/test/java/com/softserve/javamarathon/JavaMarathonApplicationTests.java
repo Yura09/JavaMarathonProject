@@ -27,13 +27,13 @@ class JavaMarathonApplicationTests {
         this.marathonService = marathonService;
     }
 
-    @Test
+   /* @Test
     void getMarathons_ReturnsCorrectList() {
         List<Marathon> expected = List.of(Marathon.builder().id(1L).title("java marathon").build(), Marathon.builder().id(2L).title("C# marathon").build());
 
         List<Marathon> actual = marathonService.getAll();
         assertEquals(expected, actual);
-    }
+    }*/
     @Test
     void getMarathons_MarathonDoesntExist_ThrowsNoEntityException(){
         assertThrows(NoEntityException.class,()->

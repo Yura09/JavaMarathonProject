@@ -2,36 +2,24 @@ package com.softserve.javamarathon;
 
 import com.softserve.javamarathon.entity.Progress;
 import com.softserve.javamarathon.entity.enums.TaskStatus;
+import com.softserve.javamarathon.repository.UserRepository;
 import com.softserve.javamarathon.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 import java.time.LocalDate;
 
 @SpringBootApplication
-public class JavaMarathonApplication implements CommandLineRunner {
-    private MarathonService marathonService;
-    private ProgressService progressService;
-    private SprintService sprintService;
-    private TaskService taskService;
-    private UserService userService;
-
-    @Autowired
-    public JavaMarathonApplication(MarathonService marathonService, ProgressService progressService, SprintService sprintService, TaskService taskService, UserService userService) {
-        this.marathonService = marathonService;
-        this.progressService = progressService;
-        this.sprintService = sprintService;
-        this.taskService = taskService;
-        this.userService = userService;
-    }
+public class JavaMarathonApplication  extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(JavaMarathonApplication.class, args);
     }
 
-    @Override
+
     public void run(String... args) throws Exception {
      //   Progress progress = new Progress();
        // progress.setStarted(LocalDate.of(2020, 6, 4));

@@ -15,6 +15,9 @@ public interface UserService {
     List<User> getAllByRole(String role);
 
     boolean addUserToMarathon(User user, Marathon marathon);
+
     void deleteUserById(Long id);
+
+    User getByEmail(String email);
 
 }

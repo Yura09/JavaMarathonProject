@@ -2,10 +2,11 @@ package com.softserve.javamarathon.controller;
 
 import com.softserve.javamarathon.entity.Marathon;
 import com.softserve.javamarathon.entity.User;
-import com.softserve.javamarathon.entity.enums.ROLE;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.service.MarathonService;
 import com.softserve.javamarathon.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/students")
 public class StudentController {
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
     private UserService userService;
     private MarathonService marathonService;
 
@@ -34,14 +36,14 @@ public class StudentController {
     @GetMapping("/{id}")
     public String getStudentsFromMarathon(@PathVariable("id") Long marathonId, Model model) {
         model.addAttribute("marathonId", marathonId);
-        model.addAttribute("students", userService.getAll().stream().filter(student -> student.getRole().equals(ROLE.TRAINEE)).filter(marathon -> marathon.getMarathons().stream().anyMatch(m -> m.getId().equals(marathonId))).collect(Collectors.toList()));
+        model.addAttribute("students", userService.getAllByRole("TRAINEE").stream().filter(marathon -> marathon.getMarathons().stream().anyMatch(m -> m.getId().equals(marathonId))).collect(Collectors.toList()));
         return "student/list-students";
     }
 
     @GetMapping
     public String getAllStudents(Model model) {
-
-        model.addAttribute("students", userService.getAll());
+        logger.info("get all students");
+        model.addAttribute("students", userService.getAllByRole("TRAINEE"));
         return "student/list-students";
     }
 

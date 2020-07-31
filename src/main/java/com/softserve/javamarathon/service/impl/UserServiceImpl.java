@@ -81,10 +81,13 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
         user.getMarathons().forEach(marathon -> marathon.getUsers().remove(user));
-
         userRepository.delete(user);
     }
 
-
+    @Override
+    @Transactional
+    public User getByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
 }
 
