@@ -53,7 +53,7 @@ public class MarathonServiceImpl implements MarathonService {
     @Override
     @Transactional
     public void deleteMarathonById(Long id) {
-        Marathon marathon = marathonRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
-        marathonRepository.delete(marathon);
+         marathonRepository.delete(marathonRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found")));
+       // marathonRepository.delete(marathon);
     }
 }

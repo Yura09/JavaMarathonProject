@@ -5,6 +5,8 @@ import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.exception.NoEntityException;
 import com.softserve.javamarathon.service.MarathonService;
 import com.softserve.javamarathon.service.UserService;
+import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/students")
@@ -95,6 +94,8 @@ public class StudentController {
     @GetMapping("/{marathonId}/delete/{id}")
     public String deleteStudentFromMarathon(@PathVariable("marathonId") Long marathonId, @PathVariable("id") Long id, Model model) {
         try {
+            User user = userService.getUserById(id);
+            user.getMarathons().forEach(marathon -> marathon.getUsers().remove(user));
             userService.deleteUserById(id);
             return "redirect:/students/" + marathonId;
         } catch (NoEntityException e) {
