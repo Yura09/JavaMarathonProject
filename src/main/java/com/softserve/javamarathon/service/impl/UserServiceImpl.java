@@ -79,9 +79,9 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void deleteUserById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
-        user.getMarathons().forEach(marathon -> marathon.getUsers().remove(user));
-        userRepository.delete(user);
+      //  User user = userRepository.findById(id).orElseThrow(() -> new NoEntityException(id + " not found"));
+    //    user.getMarathons().forEach(marathon -> marathon.getUsers().remove(user));
+        userRepository.delete(getUserById(id));
     }
 
     @Override
