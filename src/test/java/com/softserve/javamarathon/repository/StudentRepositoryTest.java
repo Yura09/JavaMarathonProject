@@ -2,6 +2,7 @@ package com.softserve.javamarathon.repository;
 
 import com.softserve.javamarathon.entity.User;
 import com.softserve.javamarathon.entity.enums.ROLE;
+import java.util.Optional;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,7 @@ public class StudentRepositoryTest {
     public void newUserTest() {
 
         User user = new User();
-        user.setRole(ROLE.TRAINEE);
+        user.setRole(ROLE.ROLE_TRAINEE);
         user.setEmail("newUser@gmail.com");
         user.setFirstName("firstName");
         user.setLastName("lastName");
@@ -35,27 +36,27 @@ public class StudentRepositoryTest {
 
         userRepository.save(user);
 
-        User actual = userRepository.findUserByEmail("newUser@gmail.com");
-        Assertions.assertEquals("firstName", actual.getFirstName());
+        Optional<User> actual = userRepository.findUserByEmail("newUser@gmail.com");
+        Assertions.assertEquals("firstName", actual.get().getFirstName());
     }
 
     @Test
     public void checkFindByRole() {
         User user = new User();
-        user.setRole(ROLE.TRAINEE);
+        user.setRole(ROLE.ROLE_TRAINEE);
         user.setEmail("newUser@gmail.com");
         user.setFirstName("firstName");
         user.setLastName("lastName");
         user.setPassword("Qwert1234");
         User user1 = new User();
-        user1.setRole(ROLE.TRAINEE);
+        user1.setRole(ROLE.ROLE_TRAINEE);
         user1.setEmail("newUser1@gmail.com");
         user1.setFirstName("firstName1");
         user1.setLastName("lastName1");
         user1.setPassword("Qwert1234");
         userRepository.save(user1);
-        List<User> actual = userRepository.findAllByRole(ROLE.TRAINEE);
-        Assertions.assertEquals(ROLE.TRAINEE, actual.get(0).getRole());
-        Assertions.assertEquals(ROLE.TRAINEE, actual.get(1).getRole());
+        List<User> actual = userRepository.findAllByRole(ROLE.ROLE_TRAINEE);
+        Assertions.assertEquals(ROLE.ROLE_TRAINEE, actual.get(0).getRole());
+        Assertions.assertEquals(ROLE.ROLE_TRAINEE, actual.get(1).getRole());
     }
 }

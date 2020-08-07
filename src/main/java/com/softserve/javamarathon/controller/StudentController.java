@@ -35,14 +35,14 @@ public class StudentController {
     @GetMapping("/{id}")
     public String getStudentsFromMarathon(@PathVariable("id") Long marathonId, Model model) {
         model.addAttribute("marathonId", marathonId);
-        model.addAttribute("students", userService.getAllByRole("TRAINEE").stream().filter(marathon -> marathon.getMarathons().stream().anyMatch(m -> m.getId().equals(marathonId))).collect(Collectors.toList()));
+        model.addAttribute("students", userService.getAllByRole("ROLE_TRAINEE").stream().filter(marathon -> marathon.getMarathons().stream().anyMatch(m -> m.getId().equals(marathonId))).collect(Collectors.toList()));
         return "student/list-students";
     }
 
     @GetMapping
     public String getAllStudents(Model model) {
         logger.info("get all students");
-        model.addAttribute("students", userService.getAllByRole("TRAINEE"));
+        model.addAttribute("students", userService.getAllByRole("ROLE_TRAINEE"));
         return "student/list-students";
     }
 

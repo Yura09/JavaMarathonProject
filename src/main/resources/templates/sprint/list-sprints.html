@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Student list</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}"/>
+</head>
+<body>
+<h1>Student List</h1>
+
+<br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>title</th>
+            <th>start</th>
+            <th>finish</th>
+            <th>marathon</th>
+            <th sec:authorize="hasRole('ROLE_MENTOR')">edit</th>
+            <th sec:authorize="hasRole('ROLE_MENTOR')">delete</th>
+        </tr>
+        <tr th:each="sprint : ${sprints}">
+            <td th:text="${sprint.id}"></td>
+            <td th:text="${sprint.title}"></td>
+            <td th:text="${sprint.startDate}"></td>
+            <td th:text="${sprint.finish}"></td>
+            <td th:text="${sprint.marathon.title}"></td>
+
+            <td sec:authorize="hasRole('ROLE_MENTOR')">
+                <form th:action="@{'/sprints/'+${marathonId}+'/edit/'+${sprint.id}}" method="get">
+                    <div><input type="submit" value="edit"/></div>
+                </form>
+            </td>
+            <td sec:authorize="hasRole('ROLE_MENTOR')">
+                <form th:action="@{'/sprints/'+${marathonId}+'/delete/'+${sprint.id}}" method="get">
+                    <div>
+                        <input type="submit" value="delete"/>
+                    </div>
+
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+<br/>
+
+<div sec:authorize="hasRole('ROLE_MENTOR')" th:if="${marathonId!=null}">
+    <p><a th:href="@{'/sprints/'+${marathonId}+'/add'}">Add to current marathon</a></p>
+</div>
+</body>
+</html>
