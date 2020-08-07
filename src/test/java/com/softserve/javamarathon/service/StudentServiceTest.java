@@ -28,7 +28,7 @@ public class StudentServiceTest {
     private UserServiceImpl userService;
     private User student = User.builder()
         .id(1L)
-        .role(ROLE.TRAINEE)
+        .role(ROLE.ROLE_TRAINEE)
         .email("testUser@gmail.com")
         .lastName("test")
         .firstName("ftest")
@@ -65,7 +65,7 @@ public class StudentServiceTest {
     @Test
     public void findByRoleTest() {
         List<User> users = new ArrayList<>(Collections.singletonList(student));
-        when(userRepository.findAllByRole(ROLE.TRAINEE)).thenReturn(users);
+        when(userRepository.findAllByRole(ROLE.ROLE_TRAINEE)).thenReturn(users);
         assertEquals(users.get(0), userService.getAllByRole("TRAINEE").get(0));
     }
 }
